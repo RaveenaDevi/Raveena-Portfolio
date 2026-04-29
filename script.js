@@ -1,349 +1,171 @@
-/* script.js
-   - project tabs (filters)
-   - optional screenshot toggle (uses a third-party service if enabled)
-   - typing headline
-   - reveal on scroll
-   - contact form simulated submission
-*/
+/* =========================================
+   RAVEENA DEVI — Portfolio JS
+   ========================================= */
 
-/* ---------- typing effect in hero ---------- */
-const typingEl = document.querySelector(".typing");
-if (typingEl) {
-  const phrases = [
-    "Web Developer",
-    "Frontend Developer",
-    "WordPress & React",
-    "Performance-first websites",
-  ];
-  let p = 0,
-    i = 0,
-    forward = true;
-  function tick() {
-    const current = phrases[p];
-    typingEl.textContent = current.slice(0, i);
-    if (forward) {
-      if (i < current.length) {
-        i++;
-        setTimeout(tick, 70);
-      } else {
-        forward = false;
-        setTimeout(tick, 900);
-      }
-    } else {
-      if (i > 0) {
-        i--;
-        setTimeout(tick, 40);
-      } else {
-        forward = true;
-        p = (p + 1) % phrases.length;
-        setTimeout(tick, 200);
-      }
-    }
-  }
-  tick();
-}
+// — LOADER —
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+    startReveal();
+  }, 1500);
+});
 
-/*progress baar*/
-const progressBars = document.querySelectorAll(".progress div");
-window.addEventListener("scroll", () => {
-  progressBars.forEach((bar) => {
-    const rect = bar.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.85) {
-      bar.style.width = bar.getAttribute("style").match(/width:\s*([\d%]+)/)[1];
-    }
+// — CUSTOM CURSOR —
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('cursorFollower');
+
+document.addEventListener('mousemove', e => {
+  cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+  follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
+
+document.querySelectorAll('a, button, .cert-card, .about-card, .tag').forEach(el => {
+  el.addEventListener('mouseenter', () => { follower.style.transform += ' scale(2)'; follower.style.opacity = '.2'; });
+  el.addEventListener('mouseleave', () => { follower.style.transform = follower.style.transform.replace(' scale(2)', ''); follower.style.opacity = '.4'; });
+});
+
+// — NAVBAR SCROLL —
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+  updateActiveNav();
+});
+
+// — HAMBURGER —
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('open');
+  document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+});
+
+navLinks.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+    document.body.style.overflow = '';
   });
 });
-/* ---------- project data (categories + urls + optional screenshots) ---------- */
-const PROJECTS = [
-  // Corporate
-  {
-    title: "AspireX Tech",
-    url: "https://aspirextech.com",
-    category: "Corporate",
-    description: "Company site built with WordPress & Elementor.",
-    
-  },
-  {
-    title: "Caring Australia",
-    url: "https://caringaustralia.com.au",
-    category: "Corporate",
-    description: "Healthcare website with custom post types.",
-  },
-  {
-    title: "Curredd Tech",
-    url: "https://curreddtech.com",
-    category: "Corporate",
-    description: "Business services website.",
-  },
-  {
-    title: "Impact Solves",
-    url: "https://impactsolves.com",
-    category: "Corporate",
-    description: "Corporate solutions site.",
-  },
-  {
-    title: "Equal Markets",
-    url: "https://equalmarkets.com",
-    category: "Corporate",
-    description: "Market solutions platform.",
-  },
-  {
-    title: "Caren Housing",
-    url: "https://carenhousing.com.au",
-    category: "Corporate",
-    description: "Housing service provider.",
-  },
-  {
-    title: "OptimalTech Guruz",
-    url: "https://optimaltechguruz.com",
-    category: "Corporate",
-    description: "Business website with WP theme.",
-  },
-  {
-    title: "Xlrtek",
-    url: "https://xlrtek.com",
-    category: "Corporate",
-    description: "Technology services site.",
-  },
-  {
-    title: "Pipeline Gurus",
-    url: "https://pipelinegurus.com",
-    category: "Corporate",
-    description: "Sales & marketing platform.",
-  },
 
-  // Real Estate
-  {
-    title: "Autoadvert",
-    url: "https://autoadvert.com.au",
-    category: "Real Estate",
-    description: "Listings & taxonomy search.",
-  },
-  {
-    title: "Interior PPF",
-    url: "https://interiorppf.com/home",
-    category: "Real Estate",
-    description: "Interior protection services site.",
-  },
+// — ACTIVE NAV LINK —
+function updateActiveNav() {
+  const sections = document.querySelectorAll('section[id]');
+  const scrollPos = window.scrollY + 100;
+  sections.forEach(section => {
+    const top = section.offsetTop;
+    const bottom = top + section.offsetHeight;
+    const link = document.querySelector(`.nav-link[href="#${section.id}"]`);
+    if (link) {
+      link.style.color = (scrollPos >= top && scrollPos < bottom)
+        ? 'var(--accent)' : '';
+    }
+  });
+}
 
-  // E-commerce
-  {
-    title: "Luxe Gems Co",
-    url: "https://luxegemsco.com",
-    category: "E-commerce",
-    description: "Jewelry and gemstone online shop.",
-  },
-  {
-    title: "Lactinova",
-    url: "https://lactinova.com",
-    category: "E-commerce",
-    description: "Product catalog & contact forms.",
-  },
-
-  // Portfolio / Showcase
-  {
-    title: "Conway Arabians",
-    url: "https://conwaysrabians.bespokewebcrew.com",
-    category: "Portfolio",
-    description: "Horse breeding showcase site.",
-  },
-  {
-    title: "Baseball Glove Collector",
-    url: "https://baseballglovecollector.com",
-    category: "Portfolio",
-    description: "Gallery heavy collector site.",
-  },
-  {
-    title: "Franklin Farm LLC",
-    url: "https://franklinfarmllc.com",
-    category: "Portfolio",
-    description: "Farm portfolio site.",
-  },
-
-  // Medical / Healthcare
-  {
-    title: "Prime Dental Care",
-    url: "https://primedentalcare.com.au",
-    category: "Healthcare",
-    description: "Dental care services site.",
-  },
-  {
-    title: "Dr Nav Singh",
-    url: "https://drnavsingh.com.au",
-    category: "Healthcare",
-    description: "Doctor portfolio and practice site.",
-  },
-
-  // Finance
-  {
-    title: "Finance Smart",
-    url: "https://financesmart.vn",
-    category: "Finance",
-    description: "Financial advisory services site.",
-  },
-
-  // Certificates
-  {
-    title: "Aus Chauffeur Services",
-    url: "https://auschauffeurservices.com.au",
-    category: "Certificates",
-    description: "Chauffeur services website.",
-  },
-  {
-    title: "House & Extension Plans",
-    url: "https://houseandextensionplans.ie",
-    category: "Certificates",
-    description: "Architectural planning site.",
-  },
+// — TYPING ANIMATION —
+const roles = [
+  'Web Developer',
+  'WordPress Expert',
+  'Performance Optimizer',
+  'Shopify Developer',
+  'Technical SEO Specialist',
+  'Malware Recovery Expert'
 ];
 
-/* DOM refs */
-const filtersWrap = document.getElementById("project-filters");
-const projectsGrid = document.getElementById("projects-grid");
-const searchInput = document.getElementById("project-search");
-const screenshotToggle = document.getElementById("screenshot-toggle");
+let roleIdx = 0, charIdx = 0, isDeleting = false;
+const typingEl = document.getElementById('typing');
 
-/* categories */
-function getCategories(list) {
-  const set = new Set(list.map((p) => p.category || "Other"));
-  return ["All", ...Array.from(set)];
-}
+function typeLoop() {
+  if (!typingEl) return;
+  const current = roles[roleIdx];
 
-/* create filter tab button */
-function createFilterBtn(cat) {
-  const btn = document.createElement("button");
-  btn.className = "filter-btn";
-  btn.type = "button";
-  btn.textContent = cat;
-  btn.dataset.category = cat;
-  btn.setAttribute("role", "tab");
-  if (cat === "All") btn.classList.add("active");
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".filter-btn")
-      .forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    renderProjects();
-  });
-  return btn;
-}
-
-/* render tabs */
-function renderFilters() {
-  const cats = getCategories(PROJECTS);
-  filtersWrap.innerHTML = "";
-  cats.forEach((cat) => filtersWrap.appendChild(createFilterBtn(cat)));
-}
-
-/* fallback placeholder */
-const PLACEHOLDER =
-  "images/close-up-image-programer-working-his-desk-office.jpg";
-
-/* get image (manual > placeholder) */
-function getProjectImage(project) {
-  return project.image || PLACEHOLDER;
-}
-
-/* render projects grid */
-function renderProjects() {
-  const active =
-    document.querySelector(".filter-btn.active")?.dataset.category || "All";
-  const q = (searchInput?.value || "").toLowerCase().trim();
-
-  const filtered = PROJECTS.filter((p) => {
-    const matchesCat = active === "All" || p.category === active;
-    const matchesSearch =
-      !q ||
-      (p.title + " " + p.description + " " + p.category)
-        .toLowerCase()
-        .includes(q);
-    return matchesCat && matchesSearch;
-  });
-
-  projectsGrid.innerHTML = "";
-  if (!filtered.length) {
-    projectsGrid.innerHTML = `<p style="color:var(--muted)">No projects found.</p>`;
-    return;
+  if (isDeleting) {
+    typingEl.textContent = current.substring(0, charIdx - 1);
+    charIdx--;
+  } else {
+    typingEl.textContent = current.substring(0, charIdx + 1);
+    charIdx++;
   }
 
-  filtered.forEach((p) => {
-     const imgSrc = getProjectImage(p);
-    const screenshotUrl = `https://image.thum.io/get/${encodeURIComponent(p.url)}`;
+  let delay = isDeleting ? 55 : 100;
+  if (!isDeleting && charIdx === current.length) { delay = 1800; isDeleting = true; }
+  else if (isDeleting && charIdx === 0) { isDeleting = false; roleIdx = (roleIdx + 1) % roles.length; delay = 400; }
 
-    const card = document.createElement("article");
-    card.className = "project-card card";
-    card.innerHTML = `
-      <div class="thumb">
-        <img loading="lazy" src="${imgSrc}" alt="${p.title} thumbnail">
-        <img src="${screenshotUrl}" alt="${p.title} screenshot">
+  setTimeout(typeLoop, delay);
+}
+setTimeout(typeLoop, 1600);
 
-        <div class="thumb-overlay">
-          <a href="${p.url}" target="_blank" rel="noopener" class="btn btn-primary">🔗 Visit</a>
-        </div>
-      </div>
-      <div class="content">
-        <h4>${p.title}</h4>
-        <p>${p.description}</p>
-        <span class="category-chip">${p.category}</span>
-      </div>
-    `;
-    projectsGrid.appendChild(card);
-    observe(card);
-  });
+// — COUNTER ANIMATION —
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1800;
+  const start = performance.now();
+  const step = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(ease * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
 }
 
-/* filters/search events */
-searchInput?.addEventListener("input", () => renderProjects());
-
-/* reveal on scroll using IntersectionObserver */
-function observe(el) {
-  el.style.opacity = 0;
-  el.style.transform = "translateY(18px)";
-  const io = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.transition = "all .6s cubic-bezier(.2,.9,.3,1)";
-          entry.target.style.opacity = 1;
-          entry.target.style.transform = "translateY(0)";
-          obs.unobserve(entry.target);
+// — REVEAL ON SCROLL —
+function startReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // trigger counters if stat-num
+        if (entry.target.classList.contains('hero-stats')) {
+          entry.target.querySelectorAll('.stat-num').forEach(animateCounter);
         }
-      });
-    },
-    { threshold: 0.12 }
-  );
-  io.observe(el);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // observe stats container specifically
+  const stats = document.querySelector('.hero-stats');
+  if (stats) observer.observe(stats);
 }
 
-/* init */
-document.addEventListener("DOMContentLoaded", () => {
-  renderFilters();
-  renderProjects();
+// — CONTACT FORM —
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const success = document.getElementById('formSuccess');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
 
-  // animate elements
-  document.querySelectorAll("[data-animate]").forEach((el) => observe(el));
+  // Simulate send (replace with EmailJS or Formspree)
+  setTimeout(() => {
+    btn.textContent = 'Sent!';
+    success.classList.add('show');
+    e.target.reset();
+    setTimeout(() => {
+      btn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+      btn.disabled = false;
+      success.classList.remove('show');
+    }, 4000);
+  }, 1200);
+}
 
-  // footer year
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-});
+// — FOOTER YEAR —
+document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Certificate Lightbox */
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = lightbox.querySelector(".lightbox-img");
-const closeBtn = lightbox.querySelector(".close");
-
-document.querySelectorAll(".cert-thumb img").forEach((img) => {
-  img.addEventListener("click", () => {
-    lightbox.style.display = "flex";
-    lightboxImg.src = img.dataset.full;
-    lightboxImg.alt = img.alt;
+// — SMOOTH HOVER TILT on cards (subtle) —
+document.querySelectorAll('.about-card, .cert-card, .skill-block').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - .5;
+    const y = (e.clientY - rect.top) / rect.height - .5;
+    card.style.transform = `perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-2px)`;
   });
-});
-
-closeBtn.addEventListener("click", () => {
-  lightbox.style.display = "none";
-});
-lightbox.addEventListener("click", (e) => {
-  if (e.target === lightbox) lightbox.style.display = "none";
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
 });
