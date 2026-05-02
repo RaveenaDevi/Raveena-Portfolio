@@ -1,416 +1,522 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raveena Devi — Web Developer</title>
-  <meta name="description" content="Results-driven Web Developer specializing in WordPress, Shopify, Performance Optimization & Technical SEO." />
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Raveena Devi — Web Developer with 2+ years delivering 50+ websites across WordPress, Shopify, and Wix. Core Web Vitals specialist, SEO & malware recovery expert based in Mohali, Punjab."
+    />
+    <meta name="theme-color" content="#6d28d9" />
+    <meta property="og:title" content="Raveena Devi | Web Developer Portfolio" />
+    <meta property="og:description" content="50+ websites delivered. WordPress, Shopify, Wix, React. Core Web Vitals 85–90+." />
+    <title>Raveena Devi | Web Developer Portfolio</title>
 
-  <!-- CURSOR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
+    <link rel="icon" href="images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <!-- LOADER -->
-  <div class="loader" id="loader">
-    <div class="loader-inner">
-      <span class="loader-text">R</span>
-      <div class="loader-bar"></div>
-    </div>
-  </div>
+  <body>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-  <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <div class="nav-container">
-      <a href="#home" class="nav-logo">Raveena<span class="dot">.</span></a>
-      <nav class="nav-links" id="navLinks">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#certificates" class="nav-link">Certs</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <a href="images/Raveena_Resume.pdf" download class="nav-cta">Resume <i class="fa-solid fa-arrow-down"></i></a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+    <header class="site-header" id="site-header">
+      <div class="page-shell header-inner">
+        <a class="brand" href="#home" aria-label="Raveena Devi home">
+          <span class="brand-mark">RD</span>
+          <span class="brand-text">Raveena Devi</span>
+        </a>
 
-  <main>
-    <!-- HERO -->
-    <section id="home" class="hero">
-      <div class="hero-noise"></div>
-      <div class="hero-container">
-        <div class="hero-badge reveal">
-          <span class="badge-dot"></span> Available for Projects
-        </div>
-        <h1 class="hero-title reveal">
-          Hi, I'm<br/>
-          <span class="hero-name">Raveena</span>
-          <span class="hero-name-accent">Devi</span>
-        </h1>
-        <div class="hero-role reveal">
-          <span class="role-prefix">—</span>
-          <span class="typing-wrap"><span class="typing" id="typing"></span><span class="cursor-blink">|</span></span>
-        </div>
-        <p class="hero-desc reveal">
-          Results-driven Web Developer with <strong>50+ client websites</strong> delivered across WordPress, Shopify & Wix. Specialized in Core Web Vitals <strong>85-90+ scores</strong>, technical SEO, and malware recovery.
-        </p>
-        <div class="hero-ctas reveal">
-          <a href="#contact" class="btn btn-primary">Let's Talk <i class="fa-solid fa-arrow-right"></i></a>
-          <a href="#experience" class="btn btn-ghost">View Work</a>
-        </div>
-        <div class="hero-stats reveal">
-          <div class="stat-item">
-            <span class="stat-num" data-target="50">0</span><span class="stat-plus">+</span>
-            <p>Websites Delivered</p>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num" data-target="90">0</span><span class="stat-plus">+</span>
-            <p>Core Web Vitals</p>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num" data-target="100">0</span><span class="stat-plus">%</span>
-            <p>Malware Recovery</p>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num" data-target="3">0</span><span class="stat-plus">+</span>
-            <p>Years Experience</p>
-          </div>
+        <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#skills">Skills</a>
+          <a class="nav-link" href="#experience">Experience</a>
+          <a class="nav-link" href="#projects">Projects</a>
+          <a class="nav-link" href="#certificates">Certificates</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
+            <i class="fa-solid fa-moon"></i>
+            <span>Theme</span>
+          </button>
+          <button class="icon-btn command-open" type="button" aria-label="Open quick navigation">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <a class="btn btn-primary header-resume" href="images/raveena-devi-resume.pdf" download>
+            Resume
+            <i class="fa-solid fa-download"></i>
+          </a>
+          <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
-      <div class="hero-scroll">
-        <div class="scroll-line"></div>
-        <span>scroll</span>
-      </div>
-    </section>
+    </header>
 
-    <!-- ABOUT -->
-    <section id="about" class="section about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-text">
-            <div class="section-label reveal">— About Me</div>
-            <h2 class="section-title reveal">Building the web,<br/><span class="accent">one pixel at a time.</span></h2>
-            <p class="about-desc reveal">
-              I'm a results-driven Web Developer from Mohali, Punjab, specializing in WordPress, Shopify, and Wix. I handle the <em>full website lifecycle</em> — from development and optimization to deployment and maintenance — with a sharp focus on performance, security, and real business impact.
-            </p>
-            <p class="about-desc reveal">
-              Currently at <strong>TechFelix</strong>, I build high-performance client websites and implement technical SEO strategies that consistently achieve Core Web Vitals scores of 85-90+.
-            </p>
-            <div class="about-meta reveal">
-              <div class="meta-item"><i class="fa-solid fa-envelope"></i><a href="mailto:raveenadevi0521@gmail.com">raveenadevi0521@gmail.com</a></div>
-              <div class="meta-item"><i class="fa-solid fa-location-dot"></i><span>Mohali, Punjab</span></div>
-              <div class="meta-item"><i class="fa-solid fa-phone"></i><span>+91 62833 09768</span></div>
-              <div class="meta-item"><i class="fa-brands fa-linkedin"></i><a href="https://linkedin.com/in/raveenadevi" target="_blank" rel="noopener">linkedin.com/in/raveenadevi</a></div>
-              <div class="meta-item"><i class="fa-brands fa-github"></i><a href="https://github.com/raveenadevi" target="_blank" rel="noopener">github.com/raveenadevi</a></div>
-            </div>
-          </div>
-          <div class="about-cards-wrap">
-            <div class="about-card reveal" style="--delay:.1s">
-              <div class="acard-icon"><i class="fa-solid fa-briefcase"></i></div>
-              <div>
-                <h4>Current Role</h4>
-                <p>Web Developer</p>
-                <span>TechFelix · Oct 2025 – Present</span>
-              </div>
-            </div>
-            <div class="about-card reveal" style="--delay:.2s">
-              <div class="acard-icon"><i class="fa-brands fa-wordpress"></i></div>
-              <div>
-                <h4>Previous Role</h4>
-                <p>Junior WordPress Developer</p>
-                <span>IWD Technologies · Oct 2023 – Sep 2025</span>
-              </div>
-            </div>
-            <div class="about-card reveal" style="--delay:.3s">
-              <div class="acard-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-              <div>
-                <h4>Education</h4>
-                <p>Bachelor of Computer Applications</p>
-                <span>Panjab University, Chandigarh · 2023</span>
-              </div>
-            </div>
-            <div class="about-card reveal accent-card" style="--delay:.4s">
-              <div class="acard-icon"><i class="fa-solid fa-globe"></i></div>
-              <div>
-                <h4>Platforms</h4>
-                <p>WordPress · Shopify · Wix</p>
-                <span>Multi-platform expertise</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <main>
+      <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+      <section class="hero" id="home">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="page-shell hero-shell">
+          <div class="hero-grid">
+            <div class="hero-copy reveal">
+              <span class="eyebrow">
+                <span class="status-dot"></span>
+                Available for WordPress, Shopify & Frontend Projects
+              </span>
 
-    <!-- SKILLS -->
-    <section id="skills" class="section skills">
-      <div class="container">
-        <div class="section-label reveal">— Skills & Tech</div>
-        <h2 class="section-title reveal">What I bring <span class="accent">to the table</span></h2>
-        <p class="section-sub reveal">Technologies and tools I work with daily to deliver fast, secure, and scalable websites.</p>
+              <h1>
+                Clean websites that feel
+                <span>premium, fast, and easy to use.</span>
+              </h1>
 
-        <div class="skills-grid">
-          <div class="skill-block reveal" style="--delay:.0s">
-            <div class="skill-block-header">
-              <i class="fa-solid fa-code"></i>
-              <h3>Development</h3>
+              <p class="hero-lead">
+                I'm <strong>Raveena Devi</strong>, a Mohali-based Web Developer with 2+ years
+                delivering 50+ client websites across WordPress, Shopify, and Wix — with
+                Core Web Vitals scores of <strong>85–90+</strong> and proven SEO & malware recovery expertise.
+              </p>
+
+              <div class="hero-focus" aria-label="Current focus">
+                <span>Currently crafting</span>
+                <strong class="typing">responsive portfolio websites</strong>
+              </div>
+
+              <div class="hero-actions">
+                <a class="btn btn-primary btn-lg" href="#projects">
+                  View Work
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a class="btn btn-soft btn-lg" href="images/raveena-devi-resume.pdf" download>
+                  Download Resume
+                  <i class="fa-solid fa-file-arrow-down"></i>
+                </a>
+              </div>
             </div>
-            <div class="tags">
-              <span class="tag">WordPress</span>
-              <span class="tag">PHP</span>
-              <span class="tag">JavaScript ES6+</span>
-              <span class="tag">React</span>
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">Shopify</span>
-              <span class="tag">Wix</span>
-              <span class="tag">ACF</span>
-              <span class="tag">CPT</span>
-              <span class="tag">WooCommerce</span>
-              <span class="tag">Elementor</span>
-              <span class="tag">Divi</span>
-              <span class="tag">Gutenberg</span>
-              <span class="tag">WPBakery</span>
-            </div>
+
+            <aside class="hero-panel reveal" aria-label="Portfolio summary">
+              <div class="profile-card">
+                <div class="profile-media">
+                  <img src="images/raveenaimg.png" alt="Raveena Devi portrait" />
+                </div>
+                <div class="profile-content">
+                  <span>Web Developer</span>
+                  <h2>Raveena Devi</h2>
+                  <p>WordPress · Shopify · React JS</p>
+                </div>
+              </div>
+
+              <div class="hero-score-grid">
+                <div class="hero-score-card">
+                  <span>Experience</span>
+                  <strong>2+ Years</strong>
+                </div>
+                <div class="hero-score-card">
+                  <span>Live Sites</span>
+                  <strong><span data-count="50" data-suffix="+">50+</span></strong>
+                </div>
+                <div class="hero-score-card">
+                  <span>Core Web Vitals</span>
+                  <strong><span data-count="90" data-suffix="+">90+</span></strong>
+                </div>
+                <div class="hero-score-card">
+                  <span>Recovery Rate</span>
+                  <strong><span data-count="100" data-suffix="%">100%</span></strong>
+                </div>
+                <div class="hero-score-card wide">
+                  <span>Specialization</span>
+                  <strong>WordPress · Shopify · Wix · WooCommerce · SEO · Malware Recovery</strong>
+                </div>
+              </div>
+            </aside>
           </div>
 
-          <div class="skill-block reveal" style="--delay:.1s">
-            <div class="skill-block-header">
+          <div class="hero-proof reveal" aria-label="Professional highlights">
+            <div>
+              <i class="fa-brands fa-wordpress"></i>
+              <strong>WordPress Builds</strong>
+              <span>Theme customization, Elementor, Divi, ACF Pro, CPT, WooCommerce, PHP.</span>
+            </div>
+            <div>
+              <i class="fa-brands fa-shopify"></i>
+              <strong>Shopify & Wix</strong>
+              <span>Theme edits, UI/UX improvements, conversion optimization and migrations.</span>
+            </div>
+            <div>
               <i class="fa-solid fa-gauge-high"></i>
-              <h3>Performance & SEO</h3>
+              <strong>Core Web Vitals</strong>
+              <span>Consistently achieving 85–90+ scores via caching, CDN and asset optimization.</span>
             </div>
-            <div class="tags">
-              <span class="tag hot">Core Web Vitals 85-90+</span>
-              <span class="tag">WP Rocket</span>
-              <span class="tag">Autoptimize</span>
-              <span class="tag">CDN</span>
-              <span class="tag">On-Page SEO</span>
-              <span class="tag">Schema Markup</span>
-              <span class="tag">Internal Linking</span>
-              <span class="tag">Indexing</span>
-              <span class="tag">Redirects</span>
-            </div>
-          </div>
-
-          <div class="skill-block reveal" style="--delay:.2s">
-            <div class="skill-block-header">
+            <div>
               <i class="fa-solid fa-shield-halved"></i>
-              <h3>Security & Maintenance</h3>
-            </div>
-            <div class="tags">
-              <span class="tag hot">Malware Removal</span>
-              <span class="tag">Security Hardening</span>
-              <span class="tag">Backup & Migration</span>
-              <span class="tag">Bug Fixing</span>
-              <span class="tag">100% Recovery Rate</span>
-            </div>
-          </div>
-
-          <div class="skill-block reveal" style="--delay:.3s">
-            <div class="skill-block-header">
-              <i class="fa-solid fa-server"></i>
-              <h3>DevOps & Tools</h3>
-            </div>
-            <div class="tags">
-              <span class="tag">cPanel</span>
-              <span class="tag">DNS</span>
-              <span class="tag">Cloudflare</span>
-              <span class="tag">Hosting</span>
-              <span class="tag">Deployment</span>
-              <span class="tag">Git</span>
-              <span class="tag">Performance Monitoring</span>
+              <strong>Security & SEO</strong>
+              <span>Malware removal, hardening, schema markup, redirects and indexing fixes.</span>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" class="section experience">
-      <div class="container">
-        <div class="section-label reveal">— Experience</div>
-        <h2 class="section-title reveal">My <span class="accent">professional journey</span></h2>
-
-        <div class="timeline">
-          <div class="timeline-item reveal">
-            <div class="timeline-left">
-              <div class="tl-date">Oct 2025 — Present</div>
-              <div class="tl-company">TechFelix</div>
-            </div>
-            <div class="timeline-line"><div class="tl-dot current"></div></div>
-            <div class="timeline-right">
-              <div class="tl-role">Web Developer</div>
-              <ul class="tl-points">
-                <li>Develop and maintain high-performance client websites using WordPress, PHP, and JavaScript</li>
-                <li>Build scalable website architectures with ACF, Custom Post Types, and reusable templates</li>
-                <li>Optimize Core Web Vitals to consistently achieve scores of <strong>85–90+</strong> via caching, CDN, and asset optimization</li>
-                <li>Implement technical SEO — schema markup, internal linking, redirects, and indexing fixes</li>
-                <li>Perform <strong>malware removal</strong> and full recovery for infected WordPress websites</li>
-                <li>Customize and debug Shopify and Wix websites, improving UI/UX and conversion rates</li>
-                <li>Manage hosting environments, DNS, and deployment workflows across multiple providers</li>
-              </ul>
+      <!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+      <section id="about" class="section about">
+        <div class="page-shell section-grid two-column">
+          <div class="section-intro reveal">
+            <span class="section-kicker">About</span>
+            <h2>Results-driven developer with a design eye and a performance-first mindset.</h2>
+            <p>
+              I focus on websites that look refined, load quickly, and convert. With 2+ years of
+              end-to-end experience — from architecture to deployment and maintenance — I deliver
+              scalable WordPress, Shopify, and Wix builds with measurable real-world impact.
+            </p>
+            <div class="mini-points">
+              <span><i class="fa-solid fa-check"></i> Mobile-first layouts</span>
+              <span><i class="fa-solid fa-check"></i> Core Web Vitals 85–90+</span>
+              <span><i class="fa-solid fa-check"></i> On-page SEO & schema</span>
+              <span><i class="fa-solid fa-check"></i> Malware recovery</span>
+              <span><i class="fa-solid fa-check"></i> Cross-browser testing</span>
+              <span><i class="fa-solid fa-check"></i> Multi-platform delivery</span>
             </div>
           </div>
 
-          <div class="timeline-item reveal">
-            <div class="timeline-left">
-              <div class="tl-date">Oct 2023 — Sep 2025</div>
-              <div class="tl-company">IWD Technologies</div>
-            </div>
-            <div class="timeline-line"><div class="tl-dot"></div></div>
-            <div class="timeline-right">
-              <div class="tl-role">Junior WordPress Developer</div>
-              <ul class="tl-points">
-                <li>Developed and maintained WordPress websites, improving user engagement by <strong>+25%</strong> and reducing bounce rates by <strong>-15%</strong></li>
-                <li>Built scalable site architectures using ACF, Custom Post Types, and reusable templates</li>
-                <li>Optimized performance, SEO, and mobile responsiveness across multiple client projects</li>
-                <li>Managed hosting environments, DNS, and deployment workflows</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="timeline-item reveal">
-            <div class="timeline-left">
-              <div class="tl-date">Jun 2023 — Sep 2023</div>
-              <div class="tl-company">Technobitz IT Solutions</div>
-            </div>
-            <div class="timeline-line"><div class="tl-dot"></div></div>
-            <div class="timeline-right">
-              <div class="tl-role">Web Developer</div>
-              <ul class="tl-points">
-                <li>Built and launched multiple WordPress websites from the ground up</li>
-                <li>Full revamp of Dogra Paramedical Gurukul College site — drove <strong>20% traffic growth</strong></li>
-                <li>Designed responsive, user-friendly websites and improved performance and engagement</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CERTIFICATES -->
-    <section id="certificates" class="section certs">
-      <div class="container">
-        <div class="section-label reveal">— Certifications</div>
-        <h2 class="section-title reveal">Credentials that <span class="accent">validate my skills</span></h2>
-
-        <div class="cert-grid">
-          <div class="cert-card reveal" style="--delay:.0s">
-            <div class="cert-icon"><i class="fa-solid fa-globe"></i></div>
-            <h4>Responsive Web Design</h4>
-            <p>freeCodeCamp</p>
-          </div>
-          <div class="cert-card reveal" style="--delay:.1s">
-            <div class="cert-icon"><i class="fa-brands fa-wordpress"></i></div>
-            <h4>WordPress</h4>
-            <p>Great Learning</p>
-          </div>
-          <div class="cert-card reveal" style="--delay:.2s">
-            <div class="cert-icon"><i class="fa-solid fa-laptop-code"></i></div>
-            <h4>Front-End Development</h4>
-            <p>Great Learning</p>
-          </div>
-          <div class="cert-card reveal" style="--delay:.3s">
-            <div class="cert-icon"><i class="fa-brands fa-java"></i></div>
-            <h4>Java Programming</h4>
-            <p>Great Learning</p>
-          </div>
-          <div class="cert-card reveal" style="--delay:.4s">
-            <div class="cert-icon"><i class="fa-solid fa-database"></i></div>
-            <h4>SQL Projects for Beginners</h4>
-            <p>Great Learning</p>
-          </div>
-          <div class="cert-card reveal" style="--delay:.5s">
-            <div class="cert-icon"><i class="fa-brands fa-react"></i></div>
-            <h4>Basics of React JS</h4>
-            <p>Great Learning</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section contact">
-      <div class="container">
-        <div class="contact-grid">
-          <div class="contact-info">
-            <div class="section-label reveal">— Get In Touch</div>
-            <h2 class="section-title reveal">Let's build something <span class="accent">great together.</span></h2>
-            <p class="reveal">Have a project, want to collaborate, or just want to say hi? My inbox is always open.</p>
-            <div class="contact-links reveal">
-              <a href="mailto:raveenadevi0521@gmail.com" class="contact-link">
-                <div class="cl-icon"><i class="fa-solid fa-envelope"></i></div>
-                <div><span>Email</span><p>raveenadevi0521@gmail.com</p></div>
-              </a>
-              <a href="https://linkedin.com/in/raveenadevi" target="_blank" rel="noopener" class="contact-link">
-                <div class="cl-icon"><i class="fa-brands fa-linkedin"></i></div>
-                <div><span>LinkedIn</span><p>linkedin.com/in/raveenadevi</p></div>
-              </a>
-              <a href="https://github.com/raveenadevi" target="_blank" rel="noopener" class="contact-link">
-                <div class="cl-icon"><i class="fa-brands fa-github"></i></div>
-                <div><span>GitHub</span><p>github.com/raveenadevi</p></div>
-              </a>
-            </div>
-          </div>
-          <div class="contact-form-wrap reveal">
-            <form id="contactForm" class="contact-form" onsubmit="handleSubmit(event)">
-              <div class="form-row">
-                <div class="form-group">
-                  <input type="text" name="name" id="name" required placeholder=" " />
-                  <label for="name">Your Name</label>
-                </div>
-                <div class="form-group">
-                  <input type="email" name="email" id="email" required placeholder=" " />
-                  <label for="email">Email Address</label>
-                </div>
+          <aside class="resume-card reveal" aria-label="Resume snapshot">
+            <div class="resume-top">
+              <img src="images/raveena.jpeg" alt="Raveena Devi" />
+              <div>
+                <span>Resume Snapshot</span>
+                <h3>Raveena Devi</h3>
+                <p>Web Developer · Mohali, Punjab</p>
               </div>
-              <div class="form-group">
-                <input type="text" name="subject" id="subject" placeholder=" " />
-                <label for="subject">Subject</label>
-              </div>
-              <div class="form-group">
-                <textarea name="message" id="message" rows="5" required placeholder=" "></textarea>
-                <label for="message">Your Message</label>
-              </div>
-              <button type="submit" class="btn btn-primary full-w" id="submitBtn">
-                Send Message <i class="fa-solid fa-paper-plane"></i>
-              </button>
-              <p class="form-success" id="formSuccess">✅ Message sent successfully! I'll get back to you soon.</p>
-            </form>
+            </div>
+            <div class="resume-list">
+              <a href="mailto:raveenadevi0521@gmail.com"><i class="fa-solid fa-envelope"></i>raveenadevi0521@gmail.com</a>
+              <a href="tel:+916283309768"><i class="fa-solid fa-phone"></i>+91 62833 09768</a>
+              <a href="https://www.linkedin.com/in/raveenadevi" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i>linkedin.com/in/raveenadevi</a>
+              <a href="https://raveenadevi.github.io/Raveena-Portfolio" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i>raveenadevi.github.io/Raveena-Portfolio</a>
+            </div>
+            <a class="btn btn-primary full" href="images/raveena-devi-resume.pdf" download>
+              Download Full Resume <i class="fa-solid fa-download"></i>
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ STUDIO ═══════════════════════════════ -->
+      <section class="section studio" aria-labelledby="studio-heading">
+        <div class="page-shell">
+          <div class="section-heading reveal">
+            <span class="section-kicker">Portfolio System</span>
+            <h2 id="studio-heading">A clear build process, presented like a professional studio.</h2>
+            <p>
+              Every project moves through a structured lifecycle — from discovery to launch —
+              ensuring scalable architecture and real business impact.
+            </p>
+          </div>
+
+          <div class="studio-grid">
+            <article class="studio-card reveal" data-step="01">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <h3>Understand</h3>
+              <p>Clarify pages, content hierarchy, business goal, CTA flow and target users.</p>
+            </article>
+            <article class="studio-card reveal" data-step="02">
+              <i class="fa-solid fa-pen-ruler"></i>
+              <h3>Structure</h3>
+              <p>Create a balanced layout system with reusable sections and responsive spacing.</p>
+            </article>
+            <article class="studio-card reveal" data-step="03">
+              <i class="fa-solid fa-laptop-code"></i>
+              <h3>Build</h3>
+              <p>Develop with WordPress, Shopify, Wix, React, PHP, Elementor, ACF Pro or custom code.</p>
+            </article>
+            <article class="studio-card reveal" data-step="04">
+              <i class="fa-solid fa-rocket"></i>
+              <h3>Launch</h3>
+              <p>Test responsiveness, Core Web Vitals, SEO, security and browser compatibility.</p>
+            </article>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <a href="#home" class="nav-logo">Raveena<span class="dot">.</span></a>
-        <p>Web Developer · WordPress · Shopify · Wix</p>
+      <!-- ═══════════════════════════════ SKILLS ═══════════════════════════════ -->
+      <section id="skills" class="section skills">
+        <div class="page-shell">
+          <div class="section-heading reveal">
+            <span class="section-kicker">Skills</span>
+            <h2>Technical toolkit</h2>
+            <p>Resume-backed tools and technologies used to build, optimize and secure modern websites.</p>
+          </div>
+
+          <div class="skills-grid">
+            <article class="skill-card reveal" style="--level: 93">
+              <div class="skill-icon"><i class="fa-brands fa-wordpress"></i></div>
+              <h3>WordPress & CMS</h3>
+              <p>Theme customization, Elementor, Divi, WPBakery, ACF Pro, CPT, WooCommerce, PHP, MySQL.</p>
+              <div class="meter"><span></span></div>
+            </article>
+            <article class="skill-card reveal" style="--level: 88">
+              <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
+              <h3>Frontend Development</h3>
+              <p>HTML5, CSS3, JavaScript ES6+, React (Basics), responsive UI and component thinking.</p>
+              <div class="meter"><span></span></div>
+            </article>
+            <article class="skill-card reveal" style="--level: 85">
+              <div class="skill-icon"><i class="fa-brands fa-shopify"></i></div>
+              <h3>Shopify & Wix</h3>
+              <p>Theme edits, Liquid basics, UI/UX optimization, conversion rate improvements and migrations.</p>
+              <div class="meter"><span></span></div>
+            </article>
+            <article class="skill-card reveal" style="--level: 90">
+              <div class="skill-icon"><i class="fa-solid fa-gauge-high"></i></div>
+              <h3>Performance & SEO</h3>
+              <p>Core Web Vitals (85–90+), WP Rocket, Autoptimize, CDN, schema markup, on-page SEO, redirects.</p>
+              <div class="meter"><span></span></div>
+            </article>
+            <article class="skill-card reveal" style="--level: 88">
+              <div class="skill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <h3>Security & Recovery</h3>
+              <p>Malware removal, security hardening, backup &amp; migration, bug fixing, 100% recovery rate.</p>
+              <div class="meter"><span></span></div>
+            </article>
+            <article class="skill-card reveal" style="--level: 82">
+              <div class="skill-icon"><i class="fa-solid fa-server"></i></div>
+              <h3>DevOps & Hosting</h3>
+              <p>cPanel, DNS, Cloudflare, hosting &amp; deployment, performance monitoring across multiple providers.</p>
+              <div class="meter"><span></span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ EXPERIENCE ═══════════════════════════════ -->
+      <section id="experience" class="section experience">
+        <div class="page-shell section-grid two-column align-start">
+          <div class="section-intro sticky-intro reveal">
+            <span class="section-kicker">Experience</span>
+            <h2>Professional work experience</h2>
+            <p>
+              End-to-end delivery across three companies — from WordPress and Shopify builds
+              to performance optimization, malware recovery and scalable CMS architecture.
+            </p>
+            <div class="exp-stats reveal">
+              <div class="exp-stat">
+                <strong data-count="50" data-suffix="+">50+</strong>
+                <span>Websites Delivered</span>
+              </div>
+              <div class="exp-stat">
+                <strong data-count="2" data-suffix="+ yrs">2+ yrs</strong>
+                <span>Total Experience</span>
+              </div>
+              <div class="exp-stat">
+                <strong>3</strong>
+                <span>Platforms</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-card reveal">
+              <div class="timeline-date">Oct 2025 — Present</div>
+              <div class="timeline-content">
+                <h3>Web Developer</h3>
+                <p class="company">TechFelix</p>
+                <ul>
+                  <li>Develop and maintain high-performance client websites using WordPress, PHP, and JavaScript.</li>
+                  <li>Build scalable architectures with ACF, Custom Post Types (CPT), and reusable templates.</li>
+                  <li>Optimize Core Web Vitals to consistently achieve 85–90+ scores via caching, CDN, and asset optimization.</li>
+                  <li>Implement technical SEO: schema markup, internal linking, redirects, and indexing fixes.</li>
+                  <li>Perform malware removal and full recovery for infected WordPress sites, hardening against reinfection.</li>
+                  <li>Customize and debug Shopify and Wix websites, improving UI/UX and conversion rates.</li>
+                  <li>Manage hosting, DNS configurations, and deployment workflows across multiple providers.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="timeline-card reveal">
+              <div class="timeline-date">Oct 2023 — Sep 2025</div>
+              <div class="timeline-content">
+                <h3>Junior WordPress Developer</h3>
+                <p class="company">IWD Technologies</p>
+                <ul>
+                  <li>Developed and maintained WordPress websites, improving user engagement by +25% and reducing bounce rates by −15%.</li>
+                  <li>Built scalable site architectures using ACF, Custom Post Types, and reusable templates.</li>
+                  <li>Optimized performance, SEO, and mobile responsiveness across multiple client projects.</li>
+                  <li>Managed hosting environments, DNS, and deployment workflows.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="timeline-card reveal">
+              <div class="timeline-date">Jun 2023 — Sep 2023</div>
+              <div class="timeline-content">
+                <h3>Web Developer</h3>
+                <p class="company">Technobitz IT Solutions</p>
+                <ul>
+                  <li>Built and launched multiple WordPress websites including a full revamp of Dogra Paramedical Gurukul College, driving 20% traffic growth.</li>
+                  <li>Designed responsive, user-friendly websites and revamped existing client sites for improved performance.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="timeline-card reveal">
+              <div class="timeline-date">Education</div>
+              <div class="timeline-content">
+                <h3>Bachelor of Computer Applications (BCA)</h3>
+                <p class="company">Panjab University, Chandigarh — 2023</p>
+                <ul>
+                  <li>Frontend fundamentals, programming logic, databases, web technologies and project delivery basics.</li>
+                  <li>English · Hindi · Punjabi</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ PROJECTS ═══════════════════════════════ -->
+      <section id="projects" class="section projects">
+        <div class="page-shell">
+          <div class="section-heading reveal">
+            <span class="section-kicker">Projects</span>
+            <h2>Selected live website work</h2>
+            <p>Filter and search 50+ live projects by category, industry or technology stack.</p>
+          </div>
+
+          <div class="project-controls reveal">
+            <div id="project-filters" class="filters" role="tablist" aria-label="Project categories"></div>
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input id="project-search" type="search" placeholder="Search project, category or skill..." aria-label="Search projects" />
+            </div>
+          </div>
+
+          <div id="projects-grid" class="projects-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ CERTIFICATES ═══════════════════════════════ -->
+      <section id="certificates" class="section certificates">
+        <div class="page-shell">
+          <div class="section-heading reveal">
+            <span class="section-kicker">Certificates</span>
+            <h2>Learning credentials</h2>
+            <p>Click any certificate to preview it in a clean lightbox.</p>
+          </div>
+
+          <div class="cert-grid">
+            <article class="cert-card reveal" data-title="Responsive Web Design">
+              <img src="images/certificates/responsive_web_designing.jpg" alt="Responsive Web Design Certificate" />
+              <div><h3>Responsive Web Design</h3><p>freeCodeCamp</p></div>
+            </article>
+            <article class="cert-card reveal" data-title="WordPress">
+              <img src="images/certificates/wordpress.jpg" alt="WordPress Certificate" />
+              <div><h3>WordPress</h3><p>Great Learning</p></div>
+            </article>
+            <article class="cert-card reveal" data-title="Front-End Development">
+              <img src="images/certificates/full-stack-development.png" alt="Front-End Development Certificate" />
+              <div><h3>Front-End Development</h3><p>Great Learning</p></div>
+            </article>
+            <article class="cert-card reveal" data-title="React JS Basics">
+              <img src="images/certificates/react-js-certificate.jpg" alt="React JS Certificate" />
+              <div><h3>Basics of React JS</h3><p>Great Learning</p></div>
+            </article>
+            <article class="cert-card reveal" data-title="SQL Projects">
+              <img src="images/certificates/sql-certificate.jpg" alt="SQL Certificate" />
+              <div><h3>SQL Projects for Beginners</h3><p>Great Learning</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+      <section id="contact" class="section contact">
+        <div class="page-shell contact-shell">
+          <div class="contact-copy reveal">
+            <span class="section-kicker">Contact</span>
+            <h2>Let's create a polished website that looks premium and loads fast.</h2>
+            <p>
+              Send a project requirement, collaboration message or hiring enquiry. The form opens
+              your email app with the message already prepared.
+            </p>
+            <div class="contact-actions">
+              <a class="contact-chip" href="mailto:raveenadevi0521@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+              <a class="contact-chip" href="https://www.linkedin.com/in/raveenadevi" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+              <a class="contact-chip" href="https://raveenadevi.github.io/Raveena-Portfolio" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+              <a class="contact-chip" href="images/raveena-devi-resume.pdf" download><i class="fa-solid fa-file-arrow-down"></i> Resume</a>
+            </div>
+          </div>
+
+          <form id="contact-form" class="contact-form reveal">
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" placeholder="Your name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" placeholder="you@example.com" required />
+            </label>
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+            </label>
+            <button class="btn btn-primary full" type="submit">
+              Prepare Email <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell footer-inner">
+        <p>© <span id="year"></span> Raveena Devi · Web Developer · Mohali, Punjab</p>
+        <div class="footer-links">
+          <a href="https://www.linkedin.com/in/raveenadevi" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://raveenadevi.github.io/Raveena-Portfolio" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="mailto:raveenadevi0521@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        <button class="back-to-top" type="button" aria-label="Back to top">
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
       </div>
-      <div class="footer-right">
-        <a href="https://linkedin.com/in/raveenadevi" target="_blank" rel="noopener" class="footer-icon"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/raveenadevi" target="_blank" rel="noopener" class="footer-icon"><i class="fa-brands fa-github"></i></a>
-        <a href="mailto:raveenadevi0521@gmail.com" class="footer-icon"><i class="fa-solid fa-envelope"></i></a>
+    </footer>
+
+    <!-- Project Modal -->
+    <div class="project-modal" id="project-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project details">
+      <div class="modal-backdrop" data-close-modal></div>
+      <article class="modal-card" role="document">
+        <button class="modal-close" type="button" aria-label="Close project details" data-close-modal>&times;</button>
+        <div id="modal-content"></div>
+      </article>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Certificate preview">
+      <button class="lightbox-close" type="button" aria-label="Close certificate preview">&times;</button>
+      <img src="" alt="" />
+    </div>
+
+    <!-- Command Palette -->
+    <div class="command-palette" id="command-palette" aria-hidden="true" role="dialog" aria-label="Quick navigation">
+      <div class="command-backdrop" data-close-command></div>
+      <div class="command-box">
+        <div class="command-header">
+          <i class="fa-solid fa-terminal"></i>
+          <input id="command-input" type="search" placeholder="Type to jump: projects, skills, resume, contact..." />
+          <kbd>Esc</kbd>
+        </div>
+        <div class="command-list" id="command-list"></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> Raveena Devi. Crafted with <span class="accent">♥</span> and lots of caffeine.</p>
-    </div>
-  </footer>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
