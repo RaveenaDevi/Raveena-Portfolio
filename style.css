@@ -465,7 +465,7 @@ h1, h2, h3, p {
   max-width: 900px;
   color: var(--heading);
   font-size: clamp(3.2rem, 6.2vw, 7.2rem);
-  line-height: 0.94;
+  line-height: 1.2;
   letter-spacing: -0.075em;
   font-weight: 900;
 }
