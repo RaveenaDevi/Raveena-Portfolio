@@ -1,8 +1,17 @@
-# My Portfolio Website
+# Raveena — portfolio
 
-This is my personal portfolio website built with HTML, CSS, and JS.  
-It showcases my projects with live previews and descriptions.
+Personal site for Raveena Devi, CMS web developer (WordPress, Shopify, Wix, Squarespace).
 
-## Live Demo
+Static HTML, CSS, and JS. Live project screenshots load from the real URLs.
 
-You can view the live site here:(https://raveenadevi.github.io/Raveena-Portfolio/)
+## Local
+
+```
+python -m http.server 5173
+```
+
+Open http://127.0.0.1:5173/
+
+## Live
+
+https://raveenadevi.github.io/Raveena-Portfolio/
