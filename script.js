@@ -435,6 +435,7 @@ function bindChrome() {
   const toggle = $("#menu-toggle");
   const links = $$("#primary-nav a");
   const sections = links.map((a) => $(a.getAttribute("href"))).filter(Boolean);
+  const fab = $("#fab");
 
   let ticking = false;
   const onScroll = () => {
@@ -450,6 +451,7 @@ function bindChrome() {
         if (sec.getBoundingClientRect().top < innerHeight * 0.4) current = sec.id;
       });
       links.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === `#${current}`));
+      if (fab) fab.classList.toggle("is-on", scrollY > innerHeight * 0.6);
     });
   };
   addEventListener("scroll", onScroll, { passive: true });
@@ -577,23 +579,32 @@ function renderIndex() {
     }, { passive: true });
   }
 
+  /* on phones the ledger opens with the first rows; one tap shows the rest */
   const rows = $$(".row", body);
+  const moreBtn = $("#index-more");
+  const narrow = matchMedia("(max-width: 760px)");
+  const MOBILE_ROWS = 8;
+  let expanded = false;
   const apply = () => {
-    let shown = 0;
+    const limit = narrow.matches && !expanded ? MOBILE_ROWS : Infinity;
+    let matches = 0;
     rows.forEach((row) => {
       const ok =
         (activeFilter === "all" || row.dataset.platform === activeFilter) &&
         (!query || row.dataset.text.includes(query));
-      row.hidden = !ok;
-      if (ok) {
-        row.style.setProperty("--d", `${Math.min(shown * 0.03, 0.5)}s`);
-        shown += 1;
-      }
+      const within = ok && matches < limit;
+      row.hidden = !within;
+      if (within) row.style.setProperty("--d", `${Math.min(matches * 0.03, 0.5)}s`);
+      if (ok) matches += 1;
     });
-    countEl.textContent = shown;
-    empty.hidden = shown > 0;
+    countEl.textContent = matches;
+    empty.hidden = matches > 0;
+    moreBtn.hidden = !(narrow.matches && !expanded && matches > MOBILE_ROWS);
+    if (!moreBtn.hidden) moreBtn.textContent = `Show all ${matches} sites`;
   };
   apply();
+  moreBtn.addEventListener("click", () => { expanded = true; apply(); });
+  narrow.addEventListener("change", apply);
 
   $$(".filter").forEach((btn) =>
     btn.addEventListener("click", () => {

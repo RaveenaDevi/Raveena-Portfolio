@@ -782,6 +782,69 @@ strong { font-weight: 500; }
   .hero-print { width: min(320px, 86vw); justify-self: start; }
 }
 
+/* ── mobile experience ──────────────────────────────────────── */
+.swipe-hint, .index-more, .fab { display: none; }
+
+@media (max-width: 1060px) {
+  /* signature work becomes a swipeable snap deck (one screen, eleven plates) */
+  .stack {
+    display: flex; gap: 0.9rem; overflow-x: auto;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; perspective: none;
+    margin-inline: calc(var(--pad) * -1); padding: 0.4rem var(--pad) 1.2rem;
+  }
+  .stack::-webkit-scrollbar { display: none; }
+  .plate, .plate:nth-child(even) {
+    flex: 0 0 min(82vw, 430px); scroll-snap-align: center;
+    align-content: start; gap: 1.1rem;
+  }
+  .plate-copy p {
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .plate-cta { margin-top: 1.1rem; }
+
+  .swipe-hint { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--gold); margin: -1.4rem 0 1.4rem; }
+  .swipe-hint::after { content: "⟶"; font-size: 1.05rem; animation: nudge 1.8s var(--ease) infinite; }
+
+  /* wide, short portrait — the film-card ratio, so the hero fits one screen */
+  .hero-print { width: 100%; max-width: 460px; justify-self: start; }
+  .hero-print .print-well { aspect-ratio: 16 / 10; }
+  .hero-print .print-well img { object-position: 50% 14%; }
+
+  /* floating WhatsApp button — contact is always one thumb away */
+  .fab {
+    position: fixed; right: 1.05rem; bottom: 1.05rem; z-index: 110;
+    width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--gold); color: #0b0714;
+    box-shadow: 0 16px 36px -12px rgba(199, 154, 75, 0.65);
+    transform: translateY(90px); opacity: 0;
+    transition: transform 0.6s var(--ease), opacity 0.4s ease;
+  }
+  .fab.is-on { transform: none; opacity: 1; }
+  .fab svg { width: 25px; height: 25px; }
+}
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(9px); } }
+
+@media (max-width: 760px) {
+  .section { padding-block: 4rem; }
+  .hero { min-height: auto; padding-bottom: 1.6rem; }
+  .masthead { padding-top: 1rem; }
+
+  /* the ledger opens short; one tap shows the full index */
+  .index-more { display: flex; width: 100%; margin-top: 1.2rem; }
+  .index-more[hidden] { display: none; }
+
+  /* credentials become a swipe row of framed prints */
+  .cert-grid {
+    display: flex; gap: 0.9rem; overflow-x: auto;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-inline: calc(var(--pad) * -1); padding: 0.2rem var(--pad) 1rem;
+  }
+  .cert-grid::-webkit-scrollbar { display: none; }
+  .cert { flex: 0 0 62vw; scroll-snap-align: center; }
+}
+
 /* ── reduced motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
