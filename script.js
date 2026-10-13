@@ -82,12 +82,43 @@ const FEATURED = {
   "Energyworks": "Squarespace build for a US energy company. Clean information architecture, not a template dump.",
   "Conway Arabians": "Image-led showcase for an Arabian horse breeder — galleries, bloodlines, and a brand that reads like a stable of champions.",
   "Furniture Sharks": "Canadian furniture e-commerce on WordPress — catalog, collections, and a mobile path that never fights the products.",
-  "Dr Nav Singh": "Doctor's practice site on WordPress — clear information architecture that gets a patient from symptom to appointment fast.",
   "20 Property Management": "Wix platform for a property manager — listings, enquiries, and a structure the owner runs without me.",
   "Lactinova": "Health-product catalog on WordPress — clean product presentation with a contact-first conversion flow.",
 };
 
-const ROLES = ["WordPress", "Shopify", "Wix", "Squarespace", "WooCommerce", "Technical SEO", "Malware Recovery", "Core Web Vitals"];
+/* technology marquee — row one carries logos [name, images/tech/<slug>.svg] */
+const TECH_LOGOS = [
+  ["WordPress", "wordpress"], ["PHP", "php"], ["JavaScript", "javascript"], ["React", "react"],
+  ["HTML5", "html5"], ["CSS3", "css"], ["Shopify", "shopify"], ["WooCommerce", "woocommerce"],
+  ["Wix", "wix"], ["Squarespace", "squarespace"], ["Elementor", "elementor"],
+  ["Cloudflare", "cloudflare"], ["cPanel", "cpanel"],
+];
+const TECH_CRAFT = [
+  "Core Web Vitals", "ACF Pro", "Custom Post Types", "Divi", "WP Rocket", "Autoptimize", "CDN",
+  "Schema Markup", "On-Page SEO", "Malware Removal", "Security Hardening", "Backup & Migration",
+  "DNS", "Hosting & Deployment",
+];
+
+/* Client reviews, quoted from Raveena's LinkedIn service page (punctuation and
+   spacing tidied, wording untouched). Only real reviews belong here — add new
+   ones as the client wrote them. The first entry is shown as the lead card. */
+const TESTIMONIALS = [
+  {
+    quote: "She is a fantastic developer. Good at before, during and after project approach. Brings clarity to the project at each step and quality of work is also good. Work ends at proper timeline and in my experience working with her, I faced no delay or any kind of complaint in the project she made till now. Looking forward to work with her on great projects.",
+    name: "Rahul Rajput", role: "Project Manager @ Vedic Vaibhav · Software Engineer",
+    service: "WordPress Design", date: "March 2026", rating: 5,
+  },
+  {
+    quote: "Great project, I love the new website redesign. Would definitely recommend.",
+    name: "Angelina K.", role: "Licensed Insurance Agent · Cybersecurity",
+    service: "Web Development", date: "October 2026", rating: 5,
+  },
+  {
+    quote: "Raveena did an excellent job developing my WooCommerce store. She delivered a clean and modern website. Communication was clear throughout the project, and everything was delivered on time. I just loved her work… Highly recommended!",
+    name: "Preethi Enduri", role: "Deputy Manager at JSW Dulux Limited",
+    service: "WordPress Design", date: "March 2026", rating: 5,
+  },
+];
 
 /* ── helpers ────────────────────────────────────────────────── */
 const $ = (s, r = document) => r.querySelector(s);
@@ -215,16 +246,16 @@ function revealHero() {
 
 /* ── wordmark: fit exactly to container width ───────────────── */
 function fitWordmark() {
-  const el = $("#wordmark");
-  if (!el) return;
-  const fit = () => {
+  const marks = $$("#wordmark, .footer-mark"); /* hero wordmark and its footer echo */
+  if (!marks.length) return;
+  const fit = () => marks.forEach((el) => {
     const target = el.clientWidth - 2;
     el.style.width = "max-content";
     el.style.fontSize = "100px";
     const w = el.offsetWidth;
     el.style.width = "";
     if (w > 0 && target > 0) el.style.fontSize = `${Math.floor((100 * target) / w * 0.995)}px`;
-  };
+  });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
   fit();
   addEventListener("resize", fit);
@@ -272,17 +303,20 @@ function bindReveals() {
     },
     { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
   );
-  $$("[data-reveal], [data-clip], [data-split], [data-draw], .row, .t-card, .plate")
+  $$("[data-reveal], [data-clip], [data-split], [data-draw], .t-card, .plate")
     .filter((el) => !el.closest(".hero"))
     .forEach((el) => io.observe(el));
 
-  $$(".cert-grid, .contact-cards, .stats").forEach((group) => {
+  $$(".cert-grid, .stats, .svc-grid, .pillars, .facts, .skills, .voice-grid").forEach((group) => {
     [...group.children].forEach((child, i) => child.style.setProperty("--d", `${i * 0.08}s`));
   });
 
   /* the sheen repaints while animating — run it only when on screen */
   const masthead = $(".masthead");
   watch(masthead, (v) => masthead.classList.toggle("is-live", v), "100px");
+  /* same gate for the hero portrait's slow drift on phones */
+  const hero = $(".hero");
+  watch(hero, (v) => hero.classList.toggle("is-live", v), "0px");
 
   /* clip-path flattens 3D children — drop it once the reveal finishes */
   document.addEventListener("transitionend", (e) => {
@@ -318,35 +352,54 @@ function bindCounters() {
   $$("[data-count]").forEach((el) => io.observe(el));
 }
 
-/* ── ticker (velocity marquee on a 3D shelf; runs only in view) ── */
+/* ── technology marquee (two counter-running velocity rows on a 3D shelf;
+      runs only in view, widths measured once — no layout reads per frame) ── */
 function buildTicker() {
-  const track = $("#ticker-track");
-  if (!track) return;
-  const frag = () => {
-    ROLES.forEach((role) => {
-      const s = document.createElement("span");
-      s.textContent = role;
-      track.appendChild(s);
-    });
-  };
-  frag(); frag(); frag(); frag();
+  const rows = [
+    { track: $("#ticker-a"), dir: -1, items: TECH_LOGOS },
+    { track: $("#ticker-b"), dir: 1, items: TECH_CRAFT.map((name) => [name]) },
+  ].filter((row) => row.track);
+  if (!rows.length) return;
+
+  rows.forEach(({ track, items }) => {
+    for (let n = 0; n < 4; n++) {
+      items.forEach(([name, slug]) => {
+        const s = document.createElement("span");
+        if (slug) {
+          const logo = document.createElement("i");
+          logo.className = "ti";
+          logo.style.setProperty("--logo", `url(images/tech/${slug}.svg)`);
+          s.appendChild(logo);
+        }
+        s.appendChild(document.createTextNode(name));
+        track.appendChild(s);
+      });
+    }
+  });
   if (REDUCED) return;
 
-  let visible = false;
-  watch(track.parentElement, (v) => { visible = v; });
-  let x = 0, vel = 0, lastY = scrollY;
+  const measure = () => rows.forEach((row) => { row.half = row.track.scrollWidth / 2; });
+  rows.forEach((row) => { row.x = 0; });
+  measure();
+  addEventListener("resize", measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure).catch(() => {});
+
+  let visible = false, vel = 0, lastY = scrollY;
+  watch(rows[0].track.closest(".marquee"), (v) => { visible = v; });
   MOTION.push(() => {
     if (!visible) { lastY = scrollY; return; }
     const dy = scrollY - lastY;
     lastY = scrollY;
     vel += (Math.min(Math.abs(dy), 60) * Math.sign(dy) - vel) * 0.08;
-    x -= 0.35 + vel * 0.11;
-    const half = track.scrollWidth / 2;
-    if (half > 0) {
-      if (x <= -half) x += half;
-      if (x > 0) x -= half;
-    }
-    track.style.transform = `rotateX(14deg) translateX(${x.toFixed(2)}px) skewX(${Math.max(-4, Math.min(4, vel * 0.15)).toFixed(2)}deg)`;
+    const skew = Math.max(-4, Math.min(4, vel * 0.15)).toFixed(2);
+    rows.forEach((row) => {
+      row.x += row.dir * (0.35 + vel * 0.11);
+      if (row.half > 0) {
+        if (row.x <= -row.half) row.x += row.half;
+        if (row.x > 0) row.x -= row.half;
+      }
+      row.track.style.transform = `rotateX(14deg) translateX(${row.x.toFixed(2)}px) skewX(${skew}deg)`;
+    });
   });
 }
 
@@ -371,12 +424,19 @@ function bindTilt() {
   $$("[data-tilt]").forEach((el) => {
     const max = Number(el.dataset.tilt) || 6;
     const s = { el, tx: 0, ty: 0, cx: 0, cy: 0, max, dirty: false };
+    const glare = el.classList.contains("svc"); /* service cards carry a pointer-lit glare */
     states.push(s);
     el.addEventListener("pointermove", (e) => {
       const r = el.getBoundingClientRect();
-      s.tx = ((e.clientY - r.top) / r.height - 0.5) * -2 * max;
-      s.ty = ((e.clientX - r.left) / r.width - 0.5) * 2 * max;
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      s.tx = (py - 0.5) * -2 * max;
+      s.ty = (px - 0.5) * 2 * max;
       s.dirty = true;
+      if (glare) {
+        el.style.setProperty("--gx", `${(px * 100).toFixed(1)}%`);
+        el.style.setProperty("--gy", `${(py * 100).toFixed(1)}%`);
+      }
     });
     el.addEventListener("pointerleave", () => { s.tx = 0; s.ty = 0; s.dirty = true; });
   });
@@ -410,6 +470,87 @@ function bindTilt() {
   });
 }
 
+/* ── touch devices have no pointer to tilt with, so cards tip in 3D as they
+      pass the top and bottom of the screen — and lie flat (crisp text)
+      through the middle half, where they are actually read ── */
+function bindScrollTilt() {
+  if (REDUCED || FINE_POINTER) return;
+  const items = $$(".svc, .voice, .perf, .vcard, .quote-inner, .cert").map((el) => ({ el, on: false, cur: 0 }));
+  if (!items.length) return;
+  const byEl = new Map(items.map((it) => [it.el, it]));
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((entry) => { byEl.get(entry.target).on = entry.isIntersecting; }),
+    { rootMargin: "60px 0px" }
+  );
+  items.forEach((it) => io.observe(it.el));
+  MOTION.push(() => {
+    const half = innerHeight / 2;
+    for (const it of items) {
+      if (!it.on && it.cur === 0) continue;
+      let target = 0;
+      if (it.on) {
+        const r = it.el.getBoundingClientRect();
+        const p = (r.top + r.height / 2 - half) / half; /* −1 top edge … +1 bottom edge */
+        /* anything taller than half the screen is being read edge to edge — leave it flat */
+        if (r.height <= half) target = Math.sign(p) * Math.min(1, Math.max(0, Math.abs(p) - 0.5) / 0.5) * 7;
+      }
+      const next = it.cur + (target - it.cur) * 0.18;
+      if (Math.abs(next) < 0.02 && target === 0) {
+        if (it.cur !== 0) { it.cur = 0; it.el.style.transform = ""; }
+        continue;
+      }
+      if (Math.abs(next - it.cur) < 0.005) continue;
+      it.cur = next;
+      it.el.style.transform = `perspective(900px) rotateX(${next.toFixed(2)}deg)`;
+    }
+  });
+}
+
+/* ── services: wrap each card's detail so phones can fold it away ── */
+function bindServices() {
+  const cards = $$(".svc");
+  if (!cards.length) return;
+  cards.forEach((card) => {
+    const more = document.createElement("div");
+    more.className = "svc-more";
+    const inner = document.createElement("div");
+    inner.className = "svc-more-in";
+    inner.append(...$$(":scope > p, :scope > .chips", card));
+    more.appendChild(inner);
+    card.appendChild(more);
+  });
+
+  /* phones get an accordion (first card open); wider screens show everything */
+  const narrow = matchMedia("(max-width: 760px)");
+  const set = (card, open) => {
+    card.classList.toggle("is-open", open);
+    card.setAttribute("aria-expanded", String(open));
+  };
+  const sync = () => cards.forEach((card, i) => {
+    if (narrow.matches) {
+      card.setAttribute("role", "button");
+      card.tabIndex = 0;
+      set(card, i === 0);
+    } else {
+      card.removeAttribute("role");
+      card.removeAttribute("tabindex");
+      card.removeAttribute("aria-expanded");
+      card.classList.remove("is-open");
+    }
+  });
+  sync();
+  narrow.addEventListener("change", sync);
+  const toggle = (card) => { if (narrow.matches) set(card, !card.classList.contains("is-open")); };
+  cards.forEach((card) => {
+    card.addEventListener("click", () => toggle(card));
+    card.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      toggle(card);
+    });
+  });
+}
+
 /* ── wordmark leans back in 3D as it passes through the view ── */
 function bindWordmarkLean() {
   if (REDUCED) return;
@@ -435,15 +576,23 @@ function bindChrome() {
   const toggle = $("#menu-toggle");
   const links = $$("#primary-nav a");
   const sections = links.map((a) => $(a.getAttribute("href"))).filter(Boolean);
-  const fab = $("#fab");
+  const dock = $("#dock");
 
-  let ticking = false;
+  /* the contact dock steps aside once the contact section or footer is on screen */
+  let nearEnd = false;
+  const ends = new Map();
+  let ticking = false, lastY = scrollY;
   const onScroll = () => {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
       ticking = false;
-      header.classList.toggle("is-scrolled", scrollY > 24);
+      const y = scrollY;
+      header.classList.toggle("is-scrolled", y > 24);
+      /* phones (CSS-gated): hide the header reading down, bring it back on the first scroll up */
+      if (y > lastY + 4 && y > 240 && !nav.classList.contains("is-open")) header.classList.add("is-away");
+      else if (y < lastY - 4 || y <= 240) header.classList.remove("is-away");
+      lastY = y;
       const max = document.documentElement.scrollHeight - innerHeight;
       bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
       let current = null;
@@ -451,11 +600,17 @@ function bindChrome() {
         if (sec.getBoundingClientRect().top < innerHeight * 0.4) current = sec.id;
       });
       links.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === `#${current}`));
-      if (fab) fab.classList.toggle("is-on", scrollY > innerHeight * 0.6);
+      if (dock) dock.classList.toggle("is-on", y > innerHeight * 0.6 && !nearEnd);
     });
   };
   addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+  const endWatch = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => ends.set(entry.target, entry.isIntersecting));
+    nearEnd = [...ends.values()].some(Boolean);
+    onScroll();
+  });
+  $$("#contact, .site-footer").forEach((el) => endWatch.observe(el));
 
   toggle.addEventListener("click", () => {
     const open = nav.classList.toggle("is-open");
@@ -502,32 +657,69 @@ function renderStack() {
     liveShot(plate.querySelector("img"), url, 1200);
   });
 
-  if (REDUCED) return;
   const plates = $$(".plate", stack);
   const wide = matchMedia("(min-width: 1061px)");
-  let visible = false, wasWide = wide.matches;
+
+  /* phones: the deck is a swipe track — keep a live "03 / 10" readout */
+  const count = $("#deck-count");
+  const bar = $("#deck-bar");
+  const total = String(plates.length).padStart(2, "0");
+  const readout = (i) => {
+    if (count) count.textContent = `${String(i + 1).padStart(2, "0")} / ${total}`;
+    if (bar) bar.style.transform = `scaleX(${((i + 1) / plates.length).toFixed(3)})`;
+  };
+  readout(0);
+  let swiping = false;
+  stack.addEventListener("scroll", () => {
+    if (swiping || plates.length < 2) return;
+    swiping = true;
+    requestAnimationFrame(() => {
+      swiping = false;
+      const step = plates[1].offsetLeft - plates[0].offsetLeft;
+      if (step > 0) readout(Math.max(0, Math.min(plates.length - 1, Math.round(stack.scrollLeft / step))));
+    });
+  }, { passive: true });
+
+  if (REDUCED) return;
+  let visible = false, wasWide = false;
   watch(stack, (v) => { visible = v; });
 
-  /* smooth hand-off: batch all layout reads first (one layout pass, no
-     read/write thrash), then lerp each plate toward its target so the
-     motion glides instead of stepping with the wheel */
-  const cur = new Array(plates.length).fill(0);
+  /* Desktop hand-off. Each plate's resting position is measured once (and
+     again whenever the deck resizes), so a frame only does arithmetic on
+     scrollY — no layout reads while scrolling. The outgoing plate eases back
+     and fades as the next one rises to dock. */
   const tops = new Array(plates.length).fill(0);
+  const cur = new Array(plates.length).fill(0);
+  const measure = () => {
+    if (!wide.matches) return;
+    const gap = parseFloat(getComputedStyle(stack).rowGap) || 0;
+    let y = stack.getBoundingClientRect().top + scrollY;
+    plates.forEach((p, i) => { tops[i] = y; y += p.offsetHeight + gap; });
+  };
+  addEventListener("resize", measure);
+  if (window.ResizeObserver) new ResizeObserver(measure).observe(stack);
+
   MOTION.push(() => {
     if (!wide.matches) {
-      if (wasWide) { plates.forEach((p) => { p.style.transform = ""; p.style.opacity = ""; }); wasWide = false; }
+      if (wasWide) {
+        plates.forEach((p) => { p.style.transform = ""; p.style.opacity = ""; });
+        cur.fill(0);
+        wasWide = false;
+      }
       return;
     }
-    wasWide = true;
+    if (!wasWide) { wasWide = true; measure(); }
     if (!visible) return;
-    for (let i = 1; i < plates.length; i++) tops[i] = plates[i].getBoundingClientRect().top;
+    const vh = innerHeight;
+    const y = scrollY;
     for (let i = 0; i < plates.length - 1; i++) {
-      const t = Math.max(0, Math.min(1, (innerHeight - tops[i + 1]) / (innerHeight * 0.65)));
+      const raw = Math.max(0, Math.min(1, (vh - (tops[i + 1] - y)) / (vh * 0.72)));
+      const t = raw * raw * (3 - 2 * raw);
       const prev = cur[i];
-      const c = prev + (t - prev) * 0.14;
+      const c = prev + (t - prev) * 0.2;
+      if (Math.abs(c - prev) < 0.0004 && Math.abs(t - c) < 0.002) continue;
       cur[i] = c;
-      if (Math.abs(c - prev) < 0.0005 && Math.abs(t - c) < 0.002) continue;
-      plates[i].style.transform = `translate3d(0, ${(c * -26).toFixed(2)}px, ${(c * -160).toFixed(2)}px) rotateX(${(c * 7).toFixed(3)}deg)`;
+      plates[i].style.transform = `translate3d(0, ${(c * -22).toFixed(2)}px, 0) scale(${(1 - c * 0.07).toFixed(4)})`;
       plates[i].style.opacity = (1 - c).toFixed(3);
     }
   });
@@ -579,47 +771,149 @@ function renderIndex() {
     }, { passive: true });
   }
 
-  /* on phones the ledger opens with the first rows; one tap shows the rest */
+  /* Rows are visible the moment they exist — no per-row scroll reveal, so
+     nothing arrives late. The ledger opens short; one tap or any search
+     shows the rest. */
   const rows = $$(".row", body);
   const moreBtn = $("#index-more");
   const narrow = matchMedia("(max-width: 760px)");
-  const MOBILE_ROWS = 8;
   let expanded = false;
   const apply = () => {
-    const limit = narrow.matches && !expanded ? MOBILE_ROWS : Infinity;
+    const limit = expanded || query ? Infinity : narrow.matches ? 8 : 12;
     let matches = 0;
     rows.forEach((row) => {
       const ok =
         (activeFilter === "all" || row.dataset.platform === activeFilter) &&
         (!query || row.dataset.text.includes(query));
-      const within = ok && matches < limit;
-      row.hidden = !within;
-      if (within) row.style.setProperty("--d", `${Math.min(matches * 0.03, 0.5)}s`);
+      row.hidden = !(ok && matches < limit);
       if (ok) matches += 1;
     });
     countEl.textContent = matches;
     empty.hidden = matches > 0;
-    moreBtn.hidden = !(narrow.matches && !expanded && matches > MOBILE_ROWS);
+    moreBtn.hidden = matches <= limit;
     if (!moreBtn.hidden) moreBtn.textContent = `Show all ${matches} sites`;
   };
   apply();
   moreBtn.addEventListener("click", () => { expanded = true; apply(); });
   narrow.addEventListener("change", apply);
 
-  $$(".filter").forEach((btn) =>
-    btn.addEventListener("click", () => {
-      $$(".filter").forEach((b) => {
-        b.classList.toggle("is-on", b === btn);
-        b.setAttribute("aria-pressed", String(b === btn));
-      });
-      activeFilter = btn.dataset.filter;
-      apply();
-    })
-  );
+  const filters = $$(".filter");
+  const setFilter = (name) => {
+    activeFilter = name;
+    expanded = false;
+    filters.forEach((b) => {
+      const on = b.dataset.filter === name;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
+    apply();
+  };
+  filters.forEach((btn) => btn.addEventListener("click", () => setFilter(btn.dataset.filter)));
   $("#index-search").addEventListener("input", (e) => {
     query = e.target.value.trim().toLowerCase();
     apply();
   });
+  return setFilter;
+}
+
+/* ── CMS expertise: live counts, share bars, rotating platform cube ── */
+function bindCms(setFilter) {
+  const counts = {};
+  PROJECTS.forEach((p) => { counts[p[2]] = (counts[p[2]] || 0) + 1; });
+  $$("[data-cms-count]").forEach((el) => { el.textContent = counts[el.dataset.cmsCount] || 0; });
+  $$("[data-cms-bar]").forEach((el) => {
+    const share = (counts[el.dataset.cmsBar] || 0) / PROJECTS.length;
+    el.style.setProperty("--v", Math.max(0.04, share).toFixed(3));
+  });
+
+  const rows = $$(".cms-row");
+  rows.forEach((row) =>
+    row.addEventListener("click", () => {
+      setFilter(row.dataset.platform);
+      $("#ledger").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" });
+    })
+  );
+
+  const cube = $("#cube");
+  if (!cube || REDUCED) return;
+  /* the cube idles in a slow spin; hovering or focusing a row turns that
+     platform's face to the front by the shortest way round */
+  let visible = false, angle = -28, target = null, front = -1;
+  watch($("#cube-stage"), (v) => { visible = v; }, "120px");
+  rows.forEach((row) => {
+    const hold = () => { target = -90 * Number(row.dataset.face); };
+    const release = () => { target = null; };
+    row.addEventListener("pointerenter", hold);
+    row.addEventListener("focus", hold);
+    row.addEventListener("pointerleave", release);
+    row.addEventListener("blur", release);
+  });
+  MOTION.push(() => {
+    if (!visible) return;
+    if (target === null) angle -= 0.22;
+    else angle += ((((target - angle) % 360) + 540) % 360 - 180) * 0.09;
+    cube.style.transform = `rotateX(-14deg) rotateY(${angle.toFixed(2)}deg)`;
+    const facing = ((Math.round(-angle / 90) % 4) + 4) % 4;
+    if (facing !== front) {
+      front = facing;
+      rows.forEach((row) => row.classList.toggle("is-active", Number(row.dataset.face) === facing));
+    }
+  });
+}
+
+/* ── testimonials: rendered from TESTIMONIALS; hidden when there is nothing real to show ── */
+function renderVoices() {
+  const section = $("#testimonials");
+  const grid = $("#voice-grid");
+  if (!section || !grid) return;
+  if (!TESTIMONIALS.length) {
+    const num = $("#contact-num");
+    if (num) num.textContent = "10"; /* keep section numbering continuous */
+    return;
+  }
+  TESTIMONIALS.forEach((t, i) => {
+    const card = document.createElement("figure");
+    card.className = `voice${i === 0 ? " voice--lead" : ""}`;
+    card.dataset.reveal = "";
+    card.dataset.tilt = "5";
+
+    const body = document.createElement("div");
+    body.className = "voice-body";
+    const meta = document.createElement("div");
+    meta.className = "voice-meta";
+    const stars = document.createElement("span");
+    stars.className = "voice-stars";
+    stars.setAttribute("role", "img");
+    stars.setAttribute("aria-label", `Rated ${t.rating} out of 5`);
+    stars.textContent = "★".repeat(t.rating);
+    const service = document.createElement("span");
+    service.className = "voice-service";
+    service.textContent = t.service;
+    meta.append(stars, service);
+    const quote = document.createElement("blockquote");
+    quote.textContent = t.quote;
+    body.append(meta, quote);
+
+    const cap = document.createElement("figcaption");
+    const avatar = document.createElement("span");
+    avatar.className = "voice-avatar";
+    avatar.textContent = t.name.trim().charAt(0).toUpperCase();
+    const who = document.createElement("span");
+    who.className = "voice-who";
+    const name = document.createElement("strong");
+    name.textContent = t.name;
+    const role = document.createElement("span");
+    role.textContent = t.role;
+    who.append(name, role);
+    const src = document.createElement("span");
+    src.className = "voice-src";
+    src.innerHTML = '<svg aria-hidden="true"><use href="#i-linkedin" /></svg>';
+    src.append(t.date);
+    cap.append(avatar, who, src);
+    card.append(body, cap);
+    grid.appendChild(card);
+  });
+  section.hidden = false;
 }
 
 /* ── scroll-lit rails (method + experience) ─────────────────── */
@@ -696,9 +990,11 @@ function bindMisc() {
 function boot() {
   try {
     initTheme();
+    renderVoices();
+    bindServices();
     splitHeadings();
     renderStack();
-    renderIndex();
+    bindCms(renderIndex());
     buildTicker();
     fitWordmark();
     bindReveals();
@@ -707,6 +1003,7 @@ function boot() {
     bindChrome();
     bindRails();
     bindTilt();
+    bindScrollTilt();
     bindWordmarkLean();
     bindLightbox();
     bindMisc();
